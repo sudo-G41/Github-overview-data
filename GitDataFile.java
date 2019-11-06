@@ -42,12 +42,16 @@ public class GitDataFile {
         GitDataFile data;
         String id;
         boolean ob = false, boolFile;
-        if(args.length == 0){
-            System.out.println("아이디가 없습니다.\n아이디를 입력해 주세요.");
-            return;
-        }
-        if(args[0].equals("-help")){
-            System.out.println("사용법: java GitDataFile Github id 또는 파일명(확장자 포함) [args...]");
+        if(args.length == 0 || args[0].equals("-help") || args[0].equals("-?")){
+            System.out.println("사용법: java GitDataFile [-options] Id [args...]");
+            System.out.println("");
+            System.out.println("여기서 options는 다음과 같습니다.");
+            System.out.println("");
+            System.out.println("    -f          파일을 입력으로 받습니다.");
+            System.out.println("                입력시 파일 이름과 확장자까지 입력해 주어야 합니다.");
+            System.out.println("                파일은 양식에 맞는 파일을 입력으로 주시기 바랍니다.");
+            System.out.println("");
+            System.out.println("    -? -help    GitDataFile의 도움말 메시지를 출력합니다.");
             return;
         }
         try {
