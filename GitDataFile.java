@@ -44,6 +44,10 @@ public class GitDataFile {
             System.out.println("아이디가 없습니다.\n아이디를 입력해 주세요.");
             return;
         }
+        if(args[0].equals("-help")){
+            System.out.println("사용법: java GitDataFile Github id 또는 파일명(확장자 포함) [args...]");
+            return;
+        }
         for (String var : args) {
             if(var.indexOf(".csv") > 0){
                 try {
