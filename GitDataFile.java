@@ -30,16 +30,18 @@ import javax.net.ssl.HttpsURLConnection;
  * Departmen of Unification Theory
  * ver j.0.1
  * 2019-10-03
+ * 옵션
+ * -help 설명
+ * -f input 정보를 파일로 받을떄 생략되면 아이디로 받음
  */
 public class GitDataFile {
     public static void main(String[] args) {
         File f, fSave;
-        Scanner s = null, sc = null;
+        Scanner s = null;
         BufferedWriter bw = null;
         GitDataFile data;
         String id;
-        int idnum = -1;
-        boolean save = true;
+        boolean ob = false, boolFile;
         if(args.length == 0){
             System.out.println("아이디가 없습니다.\n아이디를 입력해 주세요.");
             return;
@@ -49,56 +51,48 @@ public class GitDataFile {
             return;
         }
         try {
-            while (save) {
-                System.out.println("정보를 어디에 저장할까요?");
-                System.out.println("1. 기존 파일에 쓰기(양식에 맞는 .csv파일)");
-                System.out.println("2. 새로 만들기(Github Data.csv생성)");
-                sc = new Scanner(System.in);
-                int num = sc.nextInt();
-                if(num == 1){
-                    sc.nextLine();
-                    String tmp = sc.nextLine();
-                    if(tmp.indexOf(".csv")<0)tmp = tmp+".csv";
-                    fSave = new File(tmp);
-                    bw = new BufferedWriter(new FileWriter(fSave, true));
-                    save = false;
-                    sc.close();
-                    break;
-                }else if (num == 2) {
-                    fSave = new File("Github Data.csv");
-                    bw = new BufferedWriter(new FileWriter(fSave));
-                    bw.write("Github ID,참여 프로젝트 개수,Github 공헌 횟수");
-                    bw.write(",본인 repos Starred,본인 repos fork,Followers 수,Following 수,총합 점수\n");
-                    save = false;
-                    sc.close();
-                    break;
-                }else{
-                    System.out.println("???????????????????????");
-                }
-                System.out.println("?");
-                Thread.sleep(1000);
+            fSave = new File("Github Data.csv");
+            boolFile = !fSave.exists();
+            bw = new BufferedWriter(new FileWriter(fSave,true));
+            if (boolFile) {
+                bw.write("Github ID,참여 프로젝트 개수,Github 공헌 횟수");
+                bw.write(",본인 repos Starred,본인 repos fork,Followers 수,Following 수,총합 점수\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e){
         }
         for (String var : args) {
-            if(var.indexOf(".csv") > 0){
-                String[] tmp;
-                try {
-                    // System.out.println("File");
-                    f = new File(var);
-                    s = new Scanner(f);
-                    // s.useDelimiter("\n");
-                    if(s.hasNext()) {
-                        // System.out.println(s.nextLine());
-                        // id = s.nextLine();
-                        // System.out.println("idnumn:"+idnum);
-                        while(s.hasNext()){
-                            id = s.nextLine();
-                            tmp = id.split(",");
-                            for (int i = 0; i < tmp.length; i++) {
-                                data = new GitDataFile(tmp[i]);
+            if(var.equals("-f")) ob = true;
+        }
+        if(ob){
+            String[] tmp;
+            try {
+                // System.out.println("File");
+                String var;
+                if(args[0].equals("-f")){
+                    var = args[1];
+                }else {
+                    var = args[0];
+                }
+                f = new File(var);
+                s = new Scanner(f);
+                // s.useDelimiter("\n");
+                if(s.hasNext()) {
+                    // System.out.println(s.nextLine());
+                    // id = s.nextLine();
+                    // System.out.println("idnumn:"+idnum);
+                    while(s.hasNext()){
+                        id = s.nextLine();
+                        tmp = id.split(",| |\t");
+                        for (int i = 0; i < tmp.length; i++) {
+                            data = new GitDataFile(tmp[i]);
+                            if(data.getRepos() == null){
+                                System.out.println("==========================");
+                                System.out.println(tmp[i]+"는 없는 ID입니다. "+i+"번째 아이디");
+                                System.out.println("==========================");
+                            }
+                            else{
                                 bw.write(tmp[i]+",");
                                 bw.write(""+data.getNumOfProjectsParticipating()+",");
                                 bw.write(""+data.getContributionsPerYear()+",");
@@ -107,42 +101,51 @@ public class GitDataFile {
                                 bw.write(""+data.getFollowers()+",");
                                 bw.write(""+data.getFollowing()+",");
                                 bw.write(""+data.getTotalScore()+"\n");
-                                System.out.println("=================================");
+                                System.out.println("==========================");
                                 data.print();
-                                System.out.println("=================================");
+                                System.out.println("==========================");
                             }
                         }
                     }
-                } catch (FileNotFoundException e) {
-                    System.out.println(var+"이란 파일이 없습니다.");
-                } catch (NoSuchElementException e) {
-                    System.out.println("...???");
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("양식에 맞는 파일을 사용해 주시기 바랍니다.");
-                } catch (IOException e){
-                    e.printStackTrace();
                 }
-                s.close();
-                sc.close();
+            } catch (FileNotFoundException e) {
+                String var = args[0].equals("-f") ? args[1]:args[0];
+                System.out.println("\""+var+"\""+" 이란 파일이 없습니다.");
+                return;
+            } catch (NoSuchElementException e) {
+                System.out.println("...???");
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("양식에 맞는 파일을 사용해 주시기 바랍니다.");
+            } catch (IOException e){
+                e.printStackTrace();
             }
-            else{
-                // System.out.println("id");
+            s.close();
+        }
+        else{
+            // System.out.println("id");
+            for (String var : args) {
                 data = new GitDataFile(var);
-                try {
-                    bw.write(var+",");
-                    bw.write(""+data.getNumOfProjectsParticipating()+",");
-                    bw.write(""+data.getContributionsPerYear()+",");
-                    bw.write(""+data.getTotalStarred()+",");
-                    bw.write(""+data.getTotalFork()+",");
-                    bw.write(""+data.getFollowers()+",");
-                    bw.write(""+data.getFollowing()+",");
-                    bw.write(""+data.getTotalScore()+"\n");
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if(data.getRepos() == null){
+                    System.out.println("==========================");
+                    System.out.println("없는 ID입니다.");
+                    System.out.println("==========================");
+                }else{
+                    try {
+                        bw.write(var+",");
+                        bw.write(""+data.getNumOfProjectsParticipating()+",");
+                        bw.write(""+data.getContributionsPerYear()+",");
+                        bw.write(""+data.getTotalStarred()+",");
+                        bw.write(""+data.getTotalFork()+",");
+                        bw.write(""+data.getFollowers()+",");
+                        bw.write(""+data.getFollowing()+",");
+                        bw.write(""+data.getTotalScore()+"\n");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("==========================");
+                    data.print();
+                    System.out.println("==========================");
                 }
-                System.out.println("=================================");
-                data.print();
-                System.out.println("=================================");
             }
         }
         try {
