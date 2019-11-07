@@ -44,7 +44,8 @@ public class GitDataFile {
         boolean ob = false, boolFile;
         if(args.length == 0 || args[0].equals("-help") || args[0].equals("-?")){
             System.out.println("사용법: java GitDataFile [-options] Id [args...]");
-            System.out.println("");
+            System.out.println("출력되는 정보는 같은 위치에 있는 Github Data.csv 파일에 저장 됩니다.");
+            System.out.println("없을 경우 Github Data.csv을 생성하여 저장합니다.");
             System.out.println("여기서 options는 다음과 같습니다.");
             System.out.println("");
             System.out.println("    -f          파일을 입력으로 받습니다.");
@@ -59,6 +60,7 @@ public class GitDataFile {
             boolFile = !fSave.exists();
             bw = new BufferedWriter(new FileWriter(fSave,true));
             if (boolFile) {
+                System.out.println("Github Data.csv파일 생성 완료");
                 bw.write("Github ID,참여 프로젝트 개수,Github 공헌 횟수");
                 bw.write(",본인 repos Starred,본인 repos fork,Followers 수,Following 수,총합 점수\n");
             }
@@ -480,5 +482,6 @@ public class GitDataFile {
         System.out.println("Followers:"+ followers);
         System.out.println("Following:"+ following);
         System.out.println("totalScore:"+ totalScore);
+        System.out.println("Github Data.csv에 저장 완료 하였습니다.");
     }
 }
