@@ -55,23 +55,23 @@ public class GitDataFile {
             System.out.println("    -? -help    GitDataFile의 도움말 메시지를 출력합니다.");
             return;
         }
-        try {
-            fSave = new File("Github Data.csv");
-            boolFile = !fSave.exists();
-            bw = new BufferedWriter(new FileWriter(fSave,true));
-            if (boolFile) {
-                // System.out.println("Github Data.csv파일 생성 완료");
-                bw.write("Github ID,참여 프로젝트 개수,Github 공헌 횟수");
-                bw.write(",본인 repos Starred,본인 repos fork,Followers 수,Following 수,총합 점수\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e){
-        }
         for (String var : args) {
             if(var.equals("-f")) ob = true;
         }
         if(ob){
+            try {
+                fSave = new File("Github Data.csv");
+                boolFile = !fSave.exists();
+                bw = new BufferedWriter(new FileWriter(fSave,true));
+                if (boolFile) {
+                    // System.out.println("Github Data.csv파일 생성 완료");
+                    bw.write("Github ID,참여 프로젝트 개수,Github 공헌 횟수");
+                    bw.write(",본인 repos Starred,본인 repos fork,Followers 수,Following 수,총합 점수\n");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (Exception e){
+            }
             String[] tmp;
             try {
                 // System.out.println("File");
@@ -113,6 +113,7 @@ public class GitDataFile {
                         }
                     }
                     System.out.println("Github Data.csv에 저장 완료 하였습니다.");
+                    bw.close();
                 }
             } catch (FileNotFoundException e) {
                 String var = args[0].equals("-f") ? args[1]:args[0];
@@ -136,28 +137,11 @@ public class GitDataFile {
                     System.out.println(var+"없는 ID입니다.");
                     System.out.println("==========================");
                 }else{
-                    // try {
-                    //     bw.write(var+",");
-                    //     bw.write(""+data.getNumOfProjectsParticipating()+",");
-                    //     bw.write(""+data.getContributionsPerYear()+",");
-                    //     bw.write(""+data.getTotalStarred()+",");
-                    //     bw.write(""+data.getTotalFork()+",");
-                    //     bw.write(""+data.getFollowers()+",");
-                    //     bw.write(""+data.getFollowing()+",");
-                    //     bw.write(""+data.getTotalScore()+"\n");
-                    // } catch (IOException e) {
-                    //     e.printStackTrace();
-                    // }
                     System.out.println("==========================");
                     data.print();
                     System.out.println("==========================");
                 }
             }
-        }
-        try {
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     /**
