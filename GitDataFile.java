@@ -474,13 +474,13 @@ public class GitDataFile {
     }
 
     public void print(){
-        System.out.println("Id:"+ login);
-        System.out.println("participating:"+ NumOfProjectsParticipating);
-        System.out.println("Activity:"+ contributionsPerYear);
-        System.out.println("Total repos Starred:"+ totalStarred);
-        System.out.println("Total repos fork:"+ totalFork);
+        System.out.println("ID:"+ login+"\n");
+        System.out.println("Participating Projects:"+ NumOfProjectsParticipating);
+        System.out.println("Contributions:"+ contributionsPerYear);
+        System.out.println("Starred Repos:"+ totalStarred);
+        System.out.println("Repos Forked:"+ totalFork);
         System.out.println("Followers:"+ followers);
         System.out.println("Following:"+ following);
-        System.out.println("totalScore:"+ totalScore);
+        System.out.println("Total Score:"+ totalScore);
     }
 }
