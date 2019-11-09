@@ -60,7 +60,7 @@ public class GitDataFile {
             boolFile = !fSave.exists();
             bw = new BufferedWriter(new FileWriter(fSave,true));
             if (boolFile) {
-                System.out.println("Github Data.csv파일 생성 완료");
+                // System.out.println("Github Data.csv파일 생성 완료");
                 bw.write("Github ID,참여 프로젝트 개수,Github 공헌 횟수");
                 bw.write(",본인 repos Starred,본인 repos fork,Followers 수,Following 수,총합 점수\n");
             }
@@ -88,14 +88,16 @@ public class GitDataFile {
                     // System.out.println(s.nextLine());
                     // id = s.nextLine();
                     // System.out.println("idnumn:"+idnum);
+                    int countIDs = 0;
                     while(s.hasNext()){
                         id = s.nextLine();
                         tmp = id.split(",| |\t");
                         for (int i = 0; i < tmp.length; i++) {
                             data = new GitDataFile(tmp[i]);
+                            countIDs++;
                             if(data.getRepos() == null){
                                 System.out.println("==========================");
-                                System.out.println(tmp[i]+"는 없는 ID입니다. "+i+"번째 아이디");
+                                System.out.println(tmp[i]+"는 없는 ID입니다. 다시한번 확인해 주세요.");
                                 System.out.println("==========================");
                             }
                             else{
@@ -107,12 +109,10 @@ public class GitDataFile {
                                 bw.write(""+data.getFollowers()+",");
                                 bw.write(""+data.getFollowing()+",");
                                 bw.write(""+data.getTotalScore()+"\n");
-                                System.out.println("==========================");
-                                data.print();
-                                System.out.println("==========================");
                             }
                         }
                     }
+                    System.out.println("Github Data.csv에 저장 완료 하였습니다.");
                 }
             } catch (FileNotFoundException e) {
                 String var = args[0].equals("-f") ? args[1]:args[0];
@@ -133,21 +133,21 @@ public class GitDataFile {
                 data = new GitDataFile(var);
                 if(data.getRepos() == null){
                     System.out.println("==========================");
-                    System.out.println("없는 ID입니다.");
+                    System.out.println(var+"없는 ID입니다.");
                     System.out.println("==========================");
                 }else{
-                    try {
-                        bw.write(var+",");
-                        bw.write(""+data.getNumOfProjectsParticipating()+",");
-                        bw.write(""+data.getContributionsPerYear()+",");
-                        bw.write(""+data.getTotalStarred()+",");
-                        bw.write(""+data.getTotalFork()+",");
-                        bw.write(""+data.getFollowers()+",");
-                        bw.write(""+data.getFollowing()+",");
-                        bw.write(""+data.getTotalScore()+"\n");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    // try {
+                    //     bw.write(var+",");
+                    //     bw.write(""+data.getNumOfProjectsParticipating()+",");
+                    //     bw.write(""+data.getContributionsPerYear()+",");
+                    //     bw.write(""+data.getTotalStarred()+",");
+                    //     bw.write(""+data.getTotalFork()+",");
+                    //     bw.write(""+data.getFollowers()+",");
+                    //     bw.write(""+data.getFollowing()+",");
+                    //     bw.write(""+data.getTotalScore()+"\n");
+                    // } catch (IOException e) {
+                    //     e.printStackTrace();
+                    // }
                     System.out.println("==========================");
                     data.print();
                     System.out.println("==========================");
@@ -482,6 +482,5 @@ public class GitDataFile {
         System.out.println("Followers:"+ followers);
         System.out.println("Following:"+ following);
         System.out.println("totalScore:"+ totalScore);
-        System.out.println("Github Data.csv에 저장 완료 하였습니다.");
     }
 }
