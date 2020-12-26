@@ -1,3 +1,5 @@
+package com.sudoG41.app;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,23 +18,23 @@ import java.util.Scanner;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * Test token ac4adf5e7fd655f5c56170db08cd85dd225296e8
- * OSS¿¡ ´ëÇÑ °øÇå ¹èÁ¡1Á¡
- * -Âü¿©ÇÁ·ÎÁ§Æ® °³¼ö ¿Ï·á
- * -³â°£ ÃÑ °øÇå È½¼ö
- * OSS ÇÁÁ§Æ® ÀÎ±â ¹èÁ¡1Á¡
- * -ÀÚ½ÅÀÌ »ı¼º/¼ÒÀ¯ÇÑ repos°¡ starredµÈ È½¼ö ¿Ï·á
- * * -ÀÚ½ÅÀÌ »ı¼º/¼ÒÀ¯ÇÑ repos°¡ forkµÈ È½¼ö ¿Ï·á
- * OSS Ä¿¹Â´ÏÆ¼¿¡ ´ëÇÑ °ü½É ¹èÁ¡0.5Á¡
- * -Following ¼ö ¿Ï·á
- * -Followers ¼ö ¿Ï·á
+ * Test token 7ef2626899047aa3fc9bdc6b646b8168f6a9a587
+ * OSSì— ëŒ€í•œ ê³µí—Œ ë°°ì 1ì 
+ * -ì°¸ì—¬í”„ë¡œì íŠ¸ ê°œìˆ˜ ì™„ë£Œ
+ * -ë…„ê°„ ì´ ê³µí—Œ íšŸìˆ˜
+ * OSS í”„ì íŠ¸ ì¸ê¸° ë°°ì 1ì 
+ * -ìì‹ ì´ ìƒì„±/ì†Œìœ í•œ reposê°€ starredëœ íšŸìˆ˜ ì™„ë£Œ
+ * * -ìì‹ ì´ ìƒì„±/ì†Œìœ í•œ reposê°€ forkëœ íšŸìˆ˜ ì™„ë£Œ
+ * OSS ì»¤ë®¤ë‹ˆí‹°ì— ëŒ€í•œ ê´€ì‹¬ ë°°ì 0.5ì 
+ * -Following ìˆ˜ ì™„ë£Œ
+ * -Followers ìˆ˜ ì™„ë£Œ
  * Maker sucheol Jeong
  * Departmen of Unification Theory
  * ver j.0.1
  * 2019-10-03
- * ¿É¼Ç
- * -help ¼³¸í
- * -f input Á¤º¸¸¦ ÆÄÀÏ·Î ¹ŞÀ»‹š »ı·«µÇ¸é ¾ÆÀÌµğ·Î ¹ŞÀ½
+ * ì˜µì…˜
+ * -help ì„¤ëª…
+ * -f input ì •ë³´ë¥¼ íŒŒì¼ë¡œ ë°›ì„ë–„ ìƒëµë˜ë©´ ì•„ì´ë””ë¡œ ë°›ìŒ
  */
 public class GitDataFile {
     public static void main(String[] args) {
@@ -43,16 +45,16 @@ public class GitDataFile {
         String id;
         boolean ob = false, boolFile;
         if(args.length == 0 || args[0].equals("-help") || args[0].equals("-?")){
-            System.out.println("»ç¿ë¹ı: java GitDataFile [-options] Id [args...]");
-            System.out.println("Ãâ·ÂµÇ´Â Á¤º¸´Â °°Àº À§Ä¡¿¡ ÀÖ´Â Github Data.csv ÆÄÀÏ¿¡ ÀúÀå µË´Ï´Ù.");
-            System.out.println("¾øÀ» °æ¿ì Github Data.csvÀ» »ı¼ºÇÏ¿© ÀúÀåÇÕ´Ï´Ù.");
-            System.out.println("¿©±â¼­ options´Â ´ÙÀ½°ú °°½À´Ï´Ù.");
+            System.out.println("ì‚¬ìš©ë²•: java GitDataFile [-options] Id [args...]");
+            System.out.println("ì¶œë ¥ë˜ëŠ” ì •ë³´ëŠ” ê°™ì€ ìœ„ì¹˜ì— ìˆëŠ” Github_Data.csv íŒŒì¼ì— ì €ì¥ ë©ë‹ˆë‹¤.");
+            System.out.println("ì—†ì„ ê²½ìš° Github_Data.csvì„ ìƒì„±í•˜ì—¬ ì €ì¥í•©ë‹ˆë‹¤.");
+            System.out.println("ì—¬ê¸°ì„œ optionsëŠ” ë‹¤ìŒê³¼ ê°™ìŠµë‹ˆë‹¤.");
             System.out.println("");
-            System.out.println("    -f          ÆÄÀÏÀ» ÀÔ·ÂÀ¸·Î ¹Ş½À´Ï´Ù.");
-            System.out.println("                ÀÔ·Â½Ã ÆÄÀÏ ÀÌ¸§°ú È®ÀåÀÚ±îÁö ÀÔ·ÂÇØ ÁÖ¾î¾ß ÇÕ´Ï´Ù.");
-            System.out.println("                ÆÄÀÏÀº ¾ç½Ä¿¡ ¸Â´Â ÆÄÀÏÀ» ÀÔ·ÂÀ¸·Î ÁÖ½Ã±â ¹Ù¶ø´Ï´Ù.");
+            System.out.println("    -f          íŒŒì¼ì„ ì…ë ¥ìœ¼ë¡œ ë°›ìŠµë‹ˆë‹¤.");
+            System.out.println("                ì…ë ¥ì‹œ íŒŒì¼ ì´ë¦„ê³¼ í™•ì¥ìê¹Œì§€ ì…ë ¥í•´ ì£¼ì–´ì•¼ í•©ë‹ˆë‹¤.");
+            System.out.println("                íŒŒì¼ì€ ì–‘ì‹ì— ë§ëŠ” íŒŒì¼ì„ ì…ë ¥ìœ¼ë¡œ ì£¼ì‹œê¸° ë°”ëë‹ˆë‹¤.");
             System.out.println("");
-            System.out.println("    -? -help    GitDataFileÀÇ µµ¿ò¸» ¸Ş½ÃÁö¸¦ Ãâ·ÂÇÕ´Ï´Ù.");
+            System.out.println("    -? -help    GitDataFileì˜ ë„ì›€ë§ ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•©ë‹ˆë‹¤.");
             return;
         }
         for (String var : args) {
@@ -60,13 +62,19 @@ public class GitDataFile {
         }
         if(ob){
             try {
-                fSave = new File("Github Data.csv");
+                fSave = new File("Github_Data.csv");
                 boolFile = !fSave.exists();
+
+                //System.out.println("bw is null? : "+boolFile);
+                //s.nextLine();
+                //s.close();
+                //System.exit(0);
+
                 bw = new BufferedWriter(new FileWriter(fSave,true));
                 if (boolFile) {
-                    // System.out.println("Github Data.csvÆÄÀÏ »ı¼º ¿Ï·á");
-                    bw.write("Github ID,Âü¿© ÇÁ·ÎÁ§Æ® °³¼ö,Github °øÇå È½¼ö");
-                    bw.write(",º»ÀÎ repos Starred,º»ÀÎ repos fork,Followers ¼ö,Following ¼ö,ÃÑÇÕ Á¡¼ö\n");
+                    // System.out.println("Github Data.csvíŒŒì¼ ìƒì„± ì™„ë£Œ");
+                    bw.write("Github ID,OSS,contribution");
+                    bw.write(",repos Starred,repos fork,Followers,Following,Total Score\n");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -91,13 +99,13 @@ public class GitDataFile {
                     int countIDs = 0;
                     while(s.hasNext()){
                         id = s.nextLine();
-                        tmp = id.split(",| |\t");
+                        tmp = id.split(",| |\t|\n");
                         for (int i = 0; i < tmp.length; i++) {
                             data = new GitDataFile(tmp[i]);
                             countIDs++;
                             if(data.getRepos() == null){
                                 System.out.println("==========================");
-                                System.out.println(tmp[i]+"´Â ¾ø´Â IDÀÔ´Ï´Ù. ´Ù½ÃÇÑ¹ø È®ÀÎÇØ ÁÖ¼¼¿ä.");
+                                System.out.println(tmp[i]+"ëŠ” ì—†ëŠ” IDì…ë‹ˆë‹¤. ë‹¤ì‹œí•œë²ˆ í™•ì¸í•´ ì£¼ì„¸ìš”.");
                                 System.out.println("==========================");
                             }
                             else{
@@ -112,17 +120,17 @@ public class GitDataFile {
                             }
                         }
                     }
-                    System.out.println("Github Data.csv¿¡ ÀúÀå ¿Ï·á ÇÏ¿´½À´Ï´Ù.");
+                    System.out.println("Github_Data.csvì— ì €ì¥ ì™„ë£Œ í•˜ì˜€ìŠµë‹ˆë‹¤.");
                     bw.close();
                 }
             } catch (FileNotFoundException e) {
                 String var = args[0].equals("-f") ? args[1]:args[0];
-                System.out.println("\""+var+"\""+" ÀÌ¶õ ÆÄÀÏÀÌ ¾ø½À´Ï´Ù.");
+                System.out.println("\""+var+"\""+" ì´ë€ íŒŒì¼ì´ ì—†ìŠµë‹ˆë‹¤.");
                 return;
             } catch (NoSuchElementException e) {
                 System.out.println("...???");
             } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("¾ç½Ä¿¡ ¸Â´Â ÆÄÀÏÀ» »ç¿ëÇØ ÁÖ½Ã±â ¹Ù¶ø´Ï´Ù.");
+                System.out.println("ì–‘ì‹ì— ë§ëŠ” íŒŒì¼ì„ ì‚¬ìš©í•´ ì£¼ì‹œê¸° ë°”ëë‹ˆë‹¤.");
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -134,7 +142,7 @@ public class GitDataFile {
                 data = new GitDataFile(var);
                 if(data.getRepos() == null){
                     System.out.println("==========================");
-                    System.out.println(var+"¾ø´Â IDÀÔ´Ï´Ù.");
+                    System.out.println(var+"ì—†ëŠ” IDì…ë‹ˆë‹¤.");
                     System.out.println("==========================");
                 }else{
                     System.out.println("==========================");
@@ -147,60 +155,60 @@ public class GitDataFile {
     /**
      * 
      * String login 
-     * -IdÀúÀå 
+     * -Idì €ì¥ 
      * -getLogin()
      * -setLogin()
      * -setLogin(string)
      * 
      * int NumOfProjectsParticipating 
-     * -OssÂü¿© ÇÁ·ÎÀèÆ® ¼ö
+     * -Ossì°¸ì—¬ í”„ë¡œì­íŠ¸ ìˆ˜
      * -getNumOfProjectsParticipating()
      * -setNumOfProjectsParticipating()
      * 
      * int contributionsPerYear
-     * -¿¬°£ È°µ¿·®
+     * -ì—°ê°„ í™œë™ëŸ‰
      * -getContributionsPerYear()
      * -setContributionsPerYear()
      * 
      * int totalStarred
-     * -³» ÇÁ·ÎÀèÆ®°¡ ½ºÅ¸ µÈ ¼ö
+     * -ë‚´ í”„ë¡œì­íŠ¸ê°€ ìŠ¤íƒ€ ëœ ìˆ˜
      * -getTotalStarred()
      * -setStarFork()
      * int totalFork
-     * -³» ÇÁ·ÎÀèÆ®°¡ Æ÷Å© µÈ ¼ö
+     * -ë‚´ í”„ë¡œì­íŠ¸ê°€ í¬í¬ ëœ ìˆ˜
      * -getTotalFork()
      * -setStarFork()
      * 
      * int followers
-     * -ÆÈ·Î¿ö ¼ö
+     * -íŒ”ë¡œì›Œ ìˆ˜
      * -getFollowers()
      * -setFollowers()
      * int following 
-     * -ÆÈ·ÎÀ× ¼ö
+     * -íŒ”ë¡œì‰ ìˆ˜
      * -getFollowing()
      * -setFollowing()
      * 
      * String user
-     * -À¯Àú Á¤º¸
+     * -ìœ ì € ì •ë³´
      * -getUser()
      * String repos
-     * -À¯Àú reposÁ¤º¸
+     * -ìœ ì € reposì •ë³´
      * -getRepos()
-     * À§ÀÇ µÑÀº Authenticated(token(¶Ç´Â Id), (1Àº ÅäÅ« 2´Â ¾ÆÀÌµğ))¿¡¼­ »ı¼ºµÊ
+     * ìœ„ì˜ ë‘˜ì€ Authenticated(token(ë˜ëŠ” Id), (1ì€ í† í° 2ëŠ” ì•„ì´ë””))ì—ì„œ ìƒì„±ë¨
      * 
      * boolean checkUesr
-     * -À¯Àú°¡ ÀÖ´ÂÁö Ã¤Å© ÇØÁÜ
+     * -ìœ ì €ê°€ ìˆëŠ”ì§€ ì±„í¬ í•´ì¤Œ
      * -getCheckUesr()
      * -setCheckUesr()
      * 
      * double totalScore
-     * -ÃÖÁ¾ Á¡¼ö
-     * -OssÂü¿© ÇÁ·ÎÀèÆ® ¼ö´ç 1Á¡
-     * -¿¬°£ È°µ¿·®´ç 1Á¡
-     * -ÇÁ·ÎÀèÆ®°¡ ½ºÅ¸ µÈ ¼ö´ç 1Á¡
-     * -³» ÇÁ·ÎÀèÆ®°¡ Æ÷Å© µÈ ¼ö´ç 1Á¡
-     * -ÆÈ·Î¿ö´ç 0.5Á¡
-     * -ÆÈ·ÎÀ×´ç 0.5Á¡
+     * -ìµœì¢… ì ìˆ˜
+     * -Ossì°¸ì—¬ í”„ë¡œì­íŠ¸ ìˆ˜ë‹¹ 1ì 
+     * -ì—°ê°„ í™œë™ëŸ‰ë‹¹ 1ì 
+     * -í”„ë¡œì­íŠ¸ê°€ ìŠ¤íƒ€ ëœ ìˆ˜ë‹¹ 1ì 
+     * -ë‚´ í”„ë¡œì­íŠ¸ê°€ í¬í¬ ëœ ìˆ˜ë‹¹ 1ì 
+     * -íŒ”ë¡œì›Œë‹¹ 0.5ì 
+     * -íŒ”ë¡œì‰ë‹¹ 0.5ì 
      * -getTotalScore()
      */
     private String login = null;
@@ -226,7 +234,7 @@ public class GitDataFile {
         this.Authenticated(str);
         if(checkUesr){
             this.setNumOfProjectsParticipating();
-            this.setContributionsPerYear();
+            //this.setContributionsPerYear();
             this.setStarFork();
             this.setFollowers();
             this.setFollowing();
@@ -272,7 +280,7 @@ public class GitDataFile {
         try {
             url = new URL((apiUrl+"/repos"));
             curl = (HttpsURLConnection)url.openConnection();
-            curl.setRequestProperty("Authorization", "token 35330bb0c51001d862e95fe4e99553c06020ded7");
+            curl.setRequestProperty("Authorization", "token 7ef2626899047aa3fc9bdc6b646b8168f6a9a587");
             is = curl.getInputStream();
         } catch (MalformedURLException e) {
             //System.out.println("MalformedURLException on repos");

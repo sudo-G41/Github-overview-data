@@ -1,8 +1,6 @@
+package com.sudoG41.app;
+
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -10,202 +8,99 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * Test token ac4adf5e7fd655f5c56170db08cd85dd225296e8
- * OSS¿¡ ´ëÇÑ °øÇå ¹èÁ¡1Á¡
- * -Âü¿©ÇÁ·ÎÁ§Æ® °³¼ö ¿Ï·á
- * -³â°£ ÃÑ °øÇå È½¼ö
- * OSS ÇÁÁ§Æ® ÀÎ±â ¹èÁ¡1Á¡
- * -ÀÚ½ÅÀÌ »ı¼º/¼ÒÀ¯ÇÑ repos°¡ starredµÈ È½¼ö ¿Ï·á
- * * -ÀÚ½ÅÀÌ »ı¼º/¼ÒÀ¯ÇÑ repos°¡ forkµÈ È½¼ö ¿Ï·á
- * OSS Ä¿¹Â´ÏÆ¼¿¡ ´ëÇÑ °ü½É ¹èÁ¡0.5Á¡
- * -Following ¼ö ¿Ï·á
- * -Followers ¼ö ¿Ï·á
+ * Test token 7ef2626899047aa3fc9bdc6b646b8168f6a9a587
+ * OSSì— ëŒ€í•œ ê³µí—Œ ë°°ì 1ì 
+ * -ì°¸ì—¬í”„ë¡œì íŠ¸ ê°œìˆ˜ ì™„ë£Œ
+ * -ë…„ê°„ ì´ ê³µí—Œ íšŸìˆ˜
+ * OSS í”„ì íŠ¸ ì¸ê¸° ë°°ì 1ì 
+ * -ìì‹ ì´ ìƒì„±/ì†Œìœ í•œ reposê°€ starredëœ íšŸìˆ˜ ì™„ë£Œ
+ * * -ìì‹ ì´ ìƒì„±/ì†Œìœ í•œ reposê°€ forkëœ íšŸìˆ˜ ì™„ë£Œ
+ * OSS ì»¤ë®¤ë‹ˆí‹°ì— ëŒ€í•œ ê´€ì‹¬ ë°°ì 0.5ì 
+ * -Following ìˆ˜ ì™„ë£Œ
+ * -Followers ìˆ˜ ì™„ë£Œ
  * Maker sucheol Jeong
  * Departmen of Unification Theory
  * ver j.0.1
  * 2019-10-03
- * ¿É¼Ç
- * -help ¼³¸í
- * -f input Á¤º¸¸¦ ÆÄÀÏ·Î ¹ŞÀ»‹š »ı·«µÇ¸é ¾ÆÀÌµğ·Î ¹ŞÀ½
  */
-public class GitDataFile {
+public class GitData {
     public static void main(String[] args) {
-        File f, fSave;
-        Scanner s = null;
-        BufferedWriter bw = null;
-        GitDataFile data;
-        String id;
-        boolean ob = false, boolFile;
-        if(args.length == 0 || args[0].equals("-help") || args[0].equals("-?")){
-            System.out.println("»ç¿ë¹ı: java GitDataFile [-options] Id [args...]");
-            System.out.println("Ãâ·ÂµÇ´Â Á¤º¸´Â °°Àº À§Ä¡¿¡ ÀÖ´Â Github Data.csv ÆÄÀÏ¿¡ ÀúÀå µË´Ï´Ù.");
-            System.out.println("¾øÀ» °æ¿ì Github Data.csvÀ» »ı¼ºÇÏ¿© ÀúÀåÇÕ´Ï´Ù.");
-            System.out.println("¿©±â¼­ options´Â ´ÙÀ½°ú °°½À´Ï´Ù.");
-            System.out.println("");
-            System.out.println("    -f          ÆÄÀÏÀ» ÀÔ·ÂÀ¸·Î ¹Ş½À´Ï´Ù.");
-            System.out.println("                ÀÔ·Â½Ã ÆÄÀÏ ÀÌ¸§°ú È®ÀåÀÚ±îÁö ÀÔ·ÂÇØ ÁÖ¾î¾ß ÇÕ´Ï´Ù.");
-            System.out.println("                ÆÄÀÏÀº ¾ç½Ä¿¡ ¸Â´Â ÆÄÀÏÀ» ÀÔ·ÂÀ¸·Î ÁÖ½Ã±â ¹Ù¶ø´Ï´Ù.");
-            System.out.println("");
-            System.out.println("    -? -help    GitDataFileÀÇ µµ¿ò¸» ¸Ş½ÃÁö¸¦ Ãâ·ÂÇÕ´Ï´Ù.");
+        if(args.length == 0){
+            System.out.println("ì•„ì´ë””ê°€ ì—†ìŠµë‹ˆë‹¤.\nì•„ì´ë””ë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”.");
             return;
         }
         for (String var : args) {
-            if(var.equals("-f")) ob = true;
-        }
-        if(ob){
-            try {
-                fSave = new File("Github Data.csv");
-                boolFile = !fSave.exists();
-                bw = new BufferedWriter(new FileWriter(fSave,true));
-                if (boolFile) {
-                    // System.out.println("Github Data.csvÆÄÀÏ »ı¼º ¿Ï·á");
-                    bw.write("Github ID,Âü¿© ÇÁ·ÎÁ§Æ® °³¼ö,Github °øÇå È½¼ö");
-                    bw.write(",º»ÀÎ repos Starred,º»ÀÎ repos fork,Followers ¼ö,Following ¼ö,ÃÑÇÕ Á¡¼ö\n");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (Exception e){
-            }
-            String[] tmp;
-            try {
-                // System.out.println("File");
-                String var;
-                if(args[0].equals("-f")){
-                    var = args[1];
-                }else {
-                    var = args[0];
-                }
-                f = new File(var);
-                s = new Scanner(f);
-                // s.useDelimiter("\n");
-                if(s.hasNext()) {
-                    // System.out.println(s.nextLine());
-                    // id = s.nextLine();
-                    // System.out.println("idnumn:"+idnum);
-                    int countIDs = 0;
-                    while(s.hasNext()){
-                        id = s.nextLine();
-                        tmp = id.split(",| |\t");
-                        for (int i = 0; i < tmp.length; i++) {
-                            data = new GitDataFile(tmp[i]);
-                            countIDs++;
-                            if(data.getRepos() == null){
-                                System.out.println("==========================");
-                                System.out.println(tmp[i]+"´Â ¾ø´Â IDÀÔ´Ï´Ù. ´Ù½ÃÇÑ¹ø È®ÀÎÇØ ÁÖ¼¼¿ä.");
-                                System.out.println("==========================");
-                            }
-                            else{
-                                bw.write(tmp[i]+",");
-                                bw.write(""+data.getNumOfProjectsParticipating()+",");
-                                bw.write(""+data.getContributionsPerYear()+",");
-                                bw.write(""+data.getTotalStarred()+",");
-                                bw.write(""+data.getTotalFork()+",");
-                                bw.write(""+data.getFollowers()+",");
-                                bw.write(""+data.getFollowing()+",");
-                                bw.write(""+data.getTotalScore()+"\n");
-                            }
-                        }
-                    }
-                    System.out.println("Github Data.csv¿¡ ÀúÀå ¿Ï·á ÇÏ¿´½À´Ï´Ù.");
-                    bw.close();
-                }
-            } catch (FileNotFoundException e) {
-                String var = args[0].equals("-f") ? args[1]:args[0];
-                System.out.println("\""+var+"\""+" ÀÌ¶õ ÆÄÀÏÀÌ ¾ø½À´Ï´Ù.");
-                return;
-            } catch (NoSuchElementException e) {
-                System.out.println("...???");
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("¾ç½Ä¿¡ ¸Â´Â ÆÄÀÏÀ» »ç¿ëÇØ ÁÖ½Ã±â ¹Ù¶ø´Ï´Ù.");
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-            s.close();
-        }
-        else{
-            // System.out.println("id");
-            for (String var : args) {
-                data = new GitDataFile(var);
-                if(data.getRepos() == null){
-                    System.out.println("==========================");
-                    System.out.println(var+"¾ø´Â IDÀÔ´Ï´Ù.");
-                    System.out.println("==========================");
-                }else{
-                    System.out.println("==========================");
-                    data.print();
-                    System.out.println("==========================");
-                }
-            }
+            GitData data = new GitData(var, 2);
+            data.print();
         }
     }
     /**
      * 
      * String login 
-     * -IdÀúÀå 
+     * -Idì €ì¥ 
      * -getLogin()
      * -setLogin()
      * -setLogin(string)
      * 
      * int NumOfProjectsParticipating 
-     * -OssÂü¿© ÇÁ·ÎÀèÆ® ¼ö
+     * -Ossì°¸ì—¬ í”„ë¡œì­íŠ¸ ìˆ˜
      * -getNumOfProjectsParticipating()
      * -setNumOfProjectsParticipating()
      * 
      * int contributionsPerYear
-     * -¿¬°£ È°µ¿·®
+     * -ì—°ê°„ í™œë™ëŸ‰
      * -getContributionsPerYear()
      * -setContributionsPerYear()
      * 
      * int totalStarred
-     * -³» ÇÁ·ÎÀèÆ®°¡ ½ºÅ¸ µÈ ¼ö
+     * -ë‚´ í”„ë¡œì­íŠ¸ê°€ ìŠ¤íƒ€ ëœ ìˆ˜
      * -getTotalStarred()
      * -setStarFork()
      * int totalFork
-     * -³» ÇÁ·ÎÀèÆ®°¡ Æ÷Å© µÈ ¼ö
+     * -ë‚´ í”„ë¡œì­íŠ¸ê°€ í¬í¬ ëœ ìˆ˜
      * -getTotalFork()
      * -setStarFork()
      * 
      * int followers
-     * -ÆÈ·Î¿ö ¼ö
+     * -íŒ”ë¡œì›Œ ìˆ˜
      * -getFollowers()
      * -setFollowers()
      * int following 
-     * -ÆÈ·ÎÀ× ¼ö
+     * -íŒ”ë¡œì‰ ìˆ˜
      * -getFollowing()
      * -setFollowing()
      * 
      * String user
-     * -À¯Àú Á¤º¸
+     * -ìœ ì € ì •ë³´
      * -getUser()
      * String repos
-     * -À¯Àú reposÁ¤º¸
+     * -ìœ ì € reposì •ë³´
      * -getRepos()
-     * À§ÀÇ µÑÀº Authenticated(token(¶Ç´Â Id), (1Àº ÅäÅ« 2´Â ¾ÆÀÌµğ))¿¡¼­ »ı¼ºµÊ
+     * ìœ„ì˜ ë‘˜ì€ Authenticated(token(ë˜ëŠ” Id), (1ì€ í† í° 2ëŠ” ì•„ì´ë””))ì—ì„œ ìƒì„±ë¨
      * 
      * boolean checkUesr
-     * -À¯Àú°¡ ÀÖ´ÂÁö Ã¤Å© ÇØÁÜ
+     * -ìœ ì €ê°€ ìˆëŠ”ì§€ ì±„í¬ í•´ì¤Œ
      * -getCheckUesr()
      * -setCheckUesr()
      * 
      * double totalScore
-     * -ÃÖÁ¾ Á¡¼ö
-     * -OssÂü¿© ÇÁ·ÎÀèÆ® ¼ö´ç 1Á¡
-     * -¿¬°£ È°µ¿·®´ç 1Á¡
-     * -ÇÁ·ÎÀèÆ®°¡ ½ºÅ¸ µÈ ¼ö´ç 1Á¡
-     * -³» ÇÁ·ÎÀèÆ®°¡ Æ÷Å© µÈ ¼ö´ç 1Á¡
-     * -ÆÈ·Î¿ö´ç 0.5Á¡
-     * -ÆÈ·ÎÀ×´ç 0.5Á¡
+     * -ìµœì¢… ì ìˆ˜
+     * -Ossì°¸ì—¬ í”„ë¡œì­íŠ¸ ìˆ˜ë‹¹ 1ì 
+     * -ì—°ê°„ í™œë™ëŸ‰ë‹¹ 1ì 
+     * -í”„ë¡œì­íŠ¸ê°€ ìŠ¤íƒ€ ëœ ìˆ˜ë‹¹ 1ì 
+     * -ë‚´ í”„ë¡œì­íŠ¸ê°€ í¬í¬ ëœ ìˆ˜ë‹¹ 1ì 
+     * -íŒ”ë¡œì›Œë‹¹ 0.5ì 
+     * -íŒ”ë¡œì‰ë‹¹ 0.5ì 
      * -getTotalScore()
      */
     private String login = null;
     private int NumOfProjectsParticipating = 0;
-    private int contributionsPerYear = 0;
+    private int contributionsPerYear = 0;//ì‚¬ìš©ë¶ˆê°€...
     private int totalStarred = 0;
     private int totalFork = 0;
     private int followers = 0;
@@ -217,62 +112,96 @@ public class GitDataFile {
     /**
      * @param void not user?
      */
-    public GitDataFile(){
+    public GitData(){
     }
     /**
      * @param void not user?
      */
-    public GitDataFile(String str){
-        this.Authenticated(str);
+    public GitData(String str, int num){
+        this.Authenticated(str, num);
         if(checkUesr){
             this.setNumOfProjectsParticipating();
-            this.setContributionsPerYear();
+            //this.setContributionsPerYear();
             this.setStarFork();
             this.setFollowers();
             this.setFollowing();
-	        totalScore = this.getNumOfProjectsParticipating()+this.getContributionsPerYear()+this.getTotalStarred()+this.getTotalStarred()+this.getTotalFork()+(0.5*(this.getFollowers()+this.getFollowing()));
+	        totalScore = this.getNumOfProjectsParticipating()+/*this.getContributionsPerYear()+*/this.getTotalStarred()+this.getTotalStarred()+this.getTotalFork()+(0.5*(this.getFollowers()+this.getFollowing()));
         }
     }
 
     /**
      * @param Token the user and repos to set using token Authorization
      */
-    public void Authenticated(String str){
+    public void Authenticated(String str, int num){
         String apiUrl = "https://api.github.com/user";
+        String token = "token "+str;
         URL url = null;
         HttpsURLConnection curl = null;
         InputStream is = null;
         Scanner urlScan = null;
-
-        setLogin(str);
-        apiUrl = "https://api.github.com/users/"+str;
-        try
+        if(num == 1)
         {
-            url = new URL(apiUrl);
-            curl = (HttpsURLConnection)url.openConnection();
-            curl.addRequestProperty("Authorization", "token 7ef2626899047aa3fc9bdc6b646b8168f6a9a587");
-            is = curl.getInputStream();
-        } catch (MalformedURLException e) 
-        {
-        } catch (IOException e) 
-        {
-            setCheckUesr(false);
-            return;
-        }
-        urlScan = new Scanner(is);
-
-        if(urlScan.hasNextLine())
-        {
-            do 
+            try
             {
-                user = urlScan.nextLine();
-            } while (urlScan.hasNextLine());
+                url = new URL(apiUrl);
+                curl = (HttpsURLConnection)url.openConnection();
+                curl.setRequestProperty("Authorization", token);
+                is = curl.getInputStream();
+            } catch (MalformedURLException e) 
+            {
+                //System.out.println("MalformedURLException on Authenticated");
+            } catch (IOException e) 
+            {
+                //System.out.println("404 Not Found : This token not found");
+                //System.out.println(token);
+                setCheckUesr(false);
+                return;
+            }
+            urlScan = new Scanner(is);
+
+            if(urlScan.hasNextLine())
+            {
+                do 
+                {
+                    user = urlScan.nextLine();
+                } while (urlScan.hasNextLine());
+            }
+           setLogin();
+           apiUrl = "https://api.github.com/users/"+getLogin();
+        }
+        else {
+            setLogin(str);
+            apiUrl = "https://api.github.com/users/"+str;
+            try
+            {
+                url = new URL(apiUrl);
+                curl = (HttpsURLConnection)url.openConnection();
+                is = curl.getInputStream();
+            } catch (MalformedURLException e) 
+            {
+            } catch (IOException e) 
+            {
+                setCheckUesr(false);
+                return;
+            }
+            urlScan = new Scanner(is);
+
+            if(urlScan.hasNextLine())
+            {
+                do 
+                {
+                    user = urlScan.nextLine();
+                } while (urlScan.hasNextLine());
+            }
         }
         
         try {
             url = new URL((apiUrl+"/repos"));
             curl = (HttpsURLConnection)url.openConnection();
-            curl.setRequestProperty("Authorization", "token 35330bb0c51001d862e95fe4e99553c06020ded7");
+            if(num == 1)
+            {
+                curl.setRequestProperty("Authorization", token);
+            }
             is = curl.getInputStream();
         } catch (MalformedURLException e) {
             //System.out.println("MalformedURLException on repos");
@@ -329,6 +258,7 @@ public class GitDataFile {
     public int getContributionsPerYear() {
         return contributionsPerYear;
     }
+    //APIê°€ ë³€ê²½ë˜ì–´ ë”ì´ìƒ ì“¸ìˆ˜ ì—†ìŒ...
     public void setContributionsPerYear() {
         BufferedReader buffer = null;
         InputStream is = null;
@@ -458,13 +388,13 @@ public class GitDataFile {
     }
 
     public void print(){
-        System.out.println("ID:"+ login+"\n");
-        System.out.println("Participating Projects:"+ NumOfProjectsParticipating);
-        System.out.println("Contributions:"+ contributionsPerYear);
-        System.out.println("Starred Repos:"+ totalStarred);
-        System.out.println("Repos Forked:"+ totalFork);
+        System.out.println("Id:"+ login);
+        System.out.println("participating:"+ NumOfProjectsParticipating);
+        System.out.println("Activity:"+ contributionsPerYear);
+        System.out.println("Total repos Starred:"+ totalStarred);
+        System.out.println("Total repos fork:"+ totalFork);
         System.out.println("Followers:"+ followers);
         System.out.println("Following:"+ following);
-        System.out.println("Total Score:"+ totalScore);
+        System.out.println("totalScore:"+ totalScore);
     }
 }
