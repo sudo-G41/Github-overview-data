@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.sudoG41.app.AppTest" time="0.234" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.sudoG41.app.AppTest" time="0.152" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="14"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
@@ -20,7 +20,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="localRepository" value="/home/suttjang/.m2/repository"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-14-openjdk-amd64/lib"/>
-    <property name="sun.java.command" value="/home/suttjang/code_U/Java/github-overview-data/Github_users_data/target/surefire/surefirebooter14493084307434835747.jar /home/suttjang/code_U/Java/github-overview-data/Github_users_data/target/surefire 2020-12-27T11-11-53_152-jvmRun1 surefire1054007872705885388tmp surefire_018245070533461811345tmp"/>
+    <property name="sun.java.command" value="/home/suttjang/code_U/Java/github-overview-data/Github_users_data/target/surefire/surefirebooter4822792230772426301.jar /home/suttjang/code_U/Java/github-overview-data/Github_users_data/target/surefire 2020-12-27T12-03-40_669-jvmRun1 surefire4884958146432501507tmp surefire_015310671666219167819tmp"/>
     <property name="java.vendor.url.bug" value="Unknown"/>
     <property name="java.io.tmpdir" value="/tmp"/>
     <property name="jdk.debug" value="release"/>
@@ -47,7 +47,7 @@
     <property name="java.vm.version" value="14.0.2+12-Ubuntu-118.04"/>
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="58.0"/>
-    <property name="surefire.real.class.path" value="/home/suttjang/code_U/Java/github-overview-data/Github_users_data/target/surefire/surefirebooter14493084307434835747.jar"/>
+    <property name="surefire.real.class.path" value="/home/suttjang/code_U/Java/github-overview-data/Github_users_data/target/surefire/surefirebooter4822792230772426301.jar"/>
   </properties>
-  <testcase name="shouldAnswerWithTrue" classname="com.sudoG41.app.AppTest" time="0.005"/>
+  <testcase name="shouldAnswerWithTrue" classname="com.sudoG41.app.AppTest" time="0.004"/>
 </testsuite>

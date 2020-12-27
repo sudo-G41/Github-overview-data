@@ -65,7 +65,7 @@ public class GitDataFile {
         ss = new Scanner(System.in);
         System.out.print("Git Personal access tokens을 입력해 주세요 : ");
         token = ss.nextLine();
-        ss.close();
+        System.out.println(token);
         if(ob){
             try {
                 fSave = new File("Github_Data.csv");
@@ -107,6 +107,8 @@ public class GitDataFile {
                         id = s.nextLine();
                         tmp = id.split(",| |\t|\n");
                         for (int i = 0; i < tmp.length; i++) {
+                            if(tmp[i].equals(""))continue;
+                            
                             data = new GitDataFile(tmp[i], token);
                             countIDs++;
                             if(data.getRepos() == null){
@@ -157,6 +159,7 @@ public class GitDataFile {
                 }
             }
         }
+        ss.close();
     }
     /**
      * 
@@ -257,6 +260,7 @@ public class GitDataFile {
         HttpsURLConnection curl = null;
         InputStream is = null;
         Scanner urlScan = null;
+        String tokena = "token "+token;
 
         setLogin(str);
         apiUrl = "https://api.github.com/users/"+str;
@@ -264,7 +268,7 @@ public class GitDataFile {
         {
             url = new URL(apiUrl);
             curl = (HttpsURLConnection)url.openConnection();
-            curl.addRequestProperty("Authorization", "token "+token);
+            curl.addRequestProperty("Authorization", tokena);
             is = curl.getInputStream();
         } catch (MalformedURLException e) 
         {
@@ -286,7 +290,7 @@ public class GitDataFile {
         try {
             url = new URL((apiUrl+"/repos"));
             curl = (HttpsURLConnection)url.openConnection();
-            curl.setRequestProperty("Authorization", "token " + token);
+            curl.setRequestProperty("Authorization", tokena);
             is = curl.getInputStream();
         } catch (MalformedURLException e) {
             //System.out.println("MalformedURLException on repos");
