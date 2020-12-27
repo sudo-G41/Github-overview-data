@@ -19,6 +19,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Test token 7ef2626899047aa3fc9bdc6b646b8168f6a9a587
+ * new token bd191d8ea948036c130d77af1deca1bfccec50e0
  * OSS에 대한 공헌 배점1점
  * -참여프로젝트 개수 완료
  * -년간 총 공헌 횟수
@@ -39,11 +40,12 @@ import javax.net.ssl.HttpsURLConnection;
 public class GitDataFile {
     public static void main(String[] args) {
         File f, fSave;
-        Scanner s = null;
+        Scanner s = null, ss = null;
         BufferedWriter bw = null;
         GitDataFile data;
         String id;
         boolean ob = false, boolFile;
+        String token;
         if(args.length == 0 || args[0].equals("-help") || args[0].equals("-?")){
             System.out.println("사용법: java GitDataFile [-options] Id [args...]");
             System.out.println("출력되는 정보는 같은 위치에 있는 Github_Data.csv 파일에 저장 됩니다.");
@@ -60,6 +62,10 @@ public class GitDataFile {
         for (String var : args) {
             if(var.equals("-f")) ob = true;
         }
+        ss = new Scanner(System.in);
+        System.out.print("Git Personal access tokens을 입력해 주세요 : ");
+        token = ss.nextLine();
+        ss.close();
         if(ob){
             try {
                 fSave = new File("Github_Data.csv");
@@ -101,7 +107,7 @@ public class GitDataFile {
                         id = s.nextLine();
                         tmp = id.split(",| |\t|\n");
                         for (int i = 0; i < tmp.length; i++) {
-                            data = new GitDataFile(tmp[i]);
+                            data = new GitDataFile(tmp[i], token);
                             countIDs++;
                             if(data.getRepos() == null){
                                 System.out.println("==========================");
@@ -139,7 +145,7 @@ public class GitDataFile {
         else{
             // System.out.println("id");
             for (String var : args) {
-                data = new GitDataFile(var);
+                data = new GitDataFile(var, token);
                 if(data.getRepos() == null){
                     System.out.println("==========================");
                     System.out.println(var+"없는 ID입니다.");
@@ -230,8 +236,8 @@ public class GitDataFile {
     /**
      * @param void not user?
      */
-    public GitDataFile(String str){
-        this.Authenticated(str);
+    public GitDataFile(String str, String token){
+        this.Authenticated(str, token);
         if(checkUesr){
             this.setNumOfProjectsParticipating();
             //this.setContributionsPerYear();
@@ -245,7 +251,7 @@ public class GitDataFile {
     /**
      * @param Token the user and repos to set using token Authorization
      */
-    public void Authenticated(String str){
+    public void Authenticated(String str, String token){
         String apiUrl = "https://api.github.com/user";
         URL url = null;
         HttpsURLConnection curl = null;
@@ -258,7 +264,7 @@ public class GitDataFile {
         {
             url = new URL(apiUrl);
             curl = (HttpsURLConnection)url.openConnection();
-            curl.addRequestProperty("Authorization", "token 7ef2626899047aa3fc9bdc6b646b8168f6a9a587");
+            curl.addRequestProperty("Authorization", "token "+token);
             is = curl.getInputStream();
         } catch (MalformedURLException e) 
         {
@@ -280,7 +286,7 @@ public class GitDataFile {
         try {
             url = new URL((apiUrl+"/repos"));
             curl = (HttpsURLConnection)url.openConnection();
-            curl.setRequestProperty("Authorization", "token 7ef2626899047aa3fc9bdc6b646b8168f6a9a587");
+            curl.setRequestProperty("Authorization", "token " + token);
             is = curl.getInputStream();
         } catch (MalformedURLException e) {
             //System.out.println("MalformedURLException on repos");
